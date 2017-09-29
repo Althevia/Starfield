@@ -1,15 +1,37 @@
-//your code here
+NormalParticle [] stars;
 void setup()
 {
-	//your code here
+	size(600,600);
+  stars = new NormalParticle[500];
+  for (int i = 0; i<stars.length; i++)
+  {
+    stars[i] = new NormalParticle();
+  }
 }
 void draw()
 {
-	//your code here
+  background(0);
+  for (int i = 0; i<stars.length; i++)
+  {
+	  stars[i].show();
+  }
 }
 class NormalParticle
 {
-	//your code here
+	double myX, myY, speed, dir;
+  NormalParticle()
+  {
+    speed = (Math.random()*7);
+    myX = 300;
+    myY = 300;
+    dir = Math.PI;
+  }
+  void show()
+  {
+    ellipse((float)myX,(float)myY,10,10);
+    rotate((float)dir);
+    myX = myX + 1;
+  }
 }
 interface Particle
 {
@@ -23,4 +45,3 @@ class JumboParticle //uses inheritance
 {
 	//your code here
 }
-
