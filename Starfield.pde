@@ -1,12 +1,14 @@
-NormalParticle [] stars;
+Particle [] stars;
 void setup()
 {
 	size(600,600);
-  stars = new NormalParticle[500];
+  stars = new Particle[500]; //Particle is the interface
   for (int i = 0; i<stars.length; i++)
   {
     stars[i] = new NormalParticle();
   }
+  stars[0] = new JumboParticle();
+  stars[1] = new OddballParticle();
 }
 void draw()
 {
@@ -14,34 +16,70 @@ void draw()
   for (int i = 0; i<stars.length; i++)
   {
 	  stars[i].show();
+    stars[i].move();
   }
 }
-class NormalParticle
+class NormalParticle implements Particle
 {
 	double myX, myY, speed, dir;
+  double myColor;
   NormalParticle()
   {
-    speed = (Math.random()*7);
+    speed = (Math.random()*6+1);
     myX = 300;
     myY = 300;
-    dir = Math.PI;
+    dir = Math.random()*2*Math.PI;
+    myColor = Math.random()*255;
   }
-  void show()
+  public void show()
   {
+    noStroke();
+    fill(255,(float)myColor,255);
     ellipse((float)myX,(float)myY,10,10);
-    rotate((float)dir);
-    myX = myX + 1;
+  }
+  public void move()
+  {
+    myX = myX + speed*Math.cos(dir);
+    myY = myY + speed*Math.sin(dir);
   }
 }
 interface Particle
 {
-	//your code here
+	public void show();
+  public void move();
+
 }
-class OddballParticle //uses an interface
+class JumboParticle extends NormalParticle//uses an interface
+{
+  public void show()
+  {
+    noStroke();
+    fill(255,(float)myColor,255);
+    ellipse((float)myX,(float)myY,50,50);
+  }
+}
+class OddballParticle implements Particle //uses inheritance, extends from normal class,                                //change the part that needs to be diff
 {
 	//your code here
-}
-class JumboParticle //uses inheritance
-{
-	//your code here
+  double myX, myY;
+  double myColor;
+  OddballParticle()
+  {
+    myX = 300;
+    myY = 300;
+    myColor = Math.random()*255;
+  }
+  public void show()
+  {
+    noStroke();
+    fill((float)myColor,255,255);
+    //ellipse((float)myX,(float)myY,30,50);
+    triangle((int)myX,(int)myY,(int)myX+20,(int)myY,(int)myX+10,(int)myY-20);
+  }
+  public void move()
+  {
+    
+    myX = myX + (int)(Math.random()*7)-3;
+    myY = myY + (int)(Math.random()*7)-3;
+  }
 }
