@@ -26,8 +26,8 @@ class NormalParticle implements Particle
   NormalParticle()
   {
     speed = (Math.random()*6+1);
-    myX = 300;
-    myY = 300;
+    myX = mouseX;
+    myY = mouseY;
     dir = Math.random()*2*Math.PI;
     myColor = Math.random()*255;
   }
@@ -65,8 +65,8 @@ class OddballParticle implements Particle //uses inheritance, extends from norma
   double myColor;
   OddballParticle()
   {
-    myX = 300;
-    myY = 300;
+    myX = mouseX;
+    myY = mouseY;
     myColor = Math.random()*255;
   }
   public void show()
@@ -82,4 +82,14 @@ class OddballParticle implements Particle //uses inheritance, extends from norma
     myX = myX + (int)(Math.random()*7)-3;
     myY = myY + (int)(Math.random()*7)-3;
   }
+}
+
+void mouseClicked()
+{
+  for (int i = 0; i<stars.length; i++)
+  {
+    stars[i] = new NormalParticle();
+  }
+  stars[0] = new JumboParticle();
+  stars[1] = new OddballParticle();
 }
